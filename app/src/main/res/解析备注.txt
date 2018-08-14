@@ -1,0 +1,64 @@
+//                newsService.getNewsData(params)
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidScheduler.mainThread())
+//                        .subscribe(new Subscriber<ResponseBody>() {
+//                            @Override
+//                            public void onCompleted() {
+//
+//                            }
+//                            @Override
+//                            public void onError(Throwable e) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onNext(final ResponseBody responseBody) {
+//                                mHandler.post(new Thread() {
+//                                    public void run() {
+//                                        try {
+//                                            final String res = new String(responseBody.bytes(), "UTF-8");
+//                                            try {
+//                                                JSONObject jsonObject = new JSONObject(res);
+//                                                JSONObject newsBodyBean=jsonObject.getJSONObject("showapi_res_body");
+//                                                JSONObject pageBean=newsBodyBean.getJSONObject("pagebean");
+//                                                JSONArray jsonArray=pageBean.getJSONArray("contentlist");
+//                                               // LogUtil.e("=============+"+jsonArray.toString());
+//                                                for (int i=0;i<jsonArray.length();i++){
+//                                                    JSONObject jsonObject1=jsonArray.getJSONObject(i);
+//                                                    String id=jsonObject1.optString("id");
+//                                                    String pubDate=jsonObject1.optString("pubDate");
+//                                                    boolean havePic=jsonObject1.optBoolean("havePic");
+//                                                    String channelName=jsonObject1.optString("channelName");
+//                                                    String title=jsonObject1.optString("title");
+//                                                    String desc=jsonObject1.optString("desc");
+//                                                    String source=jsonObject1.optString("source");
+//                                                    String channelId=jsonObject1.optString("channelId");
+//                                                    String nid=jsonObject1.optString("nid");
+//                                                    String link=jsonObject1.optString("link");
+//                                                   // LogUtil.e("新闻属性："+id+"  ==  "+pubDate+ " ==  "+havePic+"  ==  "+channelName+"  ==  "+title+"  ==  "+link+"  ==  "+source);
+//                                                    JSONArray imageurls=jsonObject1.getJSONArray("imageurls");
+//                                                    for (int a=0;a<imageurls.length();a++){
+//                                                        JSONObject imageurlsJSONObject=imageurls.getJSONObject(i);
+//                                                        int height=imageurlsJSONObject.optInt("height");
+//                                                        int width=imageurlsJSONObject.optInt("width");
+//                                                        String url=imageurlsJSONObject.optString("url");
+//                                                       LogUtil.e("图片属性： "+imageurls.length()+"=========="+height+"___"+width +"___"+url+"___");
+//                                                    }
+//                                                }
+//
+//                                            } catch (JSONException e) {
+//                                                e.printStackTrace();
+//                                            }
+//
+//                                            mHandler.post(new Thread() {
+//                                                public void run() {
+//                                                    textView.setText(res);
+//                                                }
+//                                            });
+//                                        } catch (IOException e) {
+//                                            e.printStackTrace();
+//                                        }
+//                                    }
+//                                });
+//                            }
+//                        });

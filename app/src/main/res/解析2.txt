@@ -1,0 +1,61 @@
+ Map<String, String> params = new HashMap<>();
+                params.put("showapi_appid", UrlTools.appid);
+                params.put("showapi_sign", UrlTools.secret);
+                params.put("channelId", "");
+                params.put("channelName", "");
+                params.put("title", "足球");
+                params.put("page", "1");
+                params.put("needContent", "0");
+                params.put("needHtml", "0");
+                params.put("needAllList", "0");
+                params.put("maxResult", "10");
+                params.put("id", "");
+                Retrofit retrofit = new Retrofit
+                        .Builder()
+                        .baseUrl(UrlTools.APP_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                        .build();
+                NewsService newsService = retrofit.create(NewsService.class);
+                newsService.getNewsData(params).subscribeOn(Schedulers.io()).observeOn(AndroidScheduler.mainThread()).subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        String json = null;
+                        try {
+                            json = new String(responseBody.bytes());
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        handleResult(json);
+                    }
+                });
+
+            }
+        });
+
+
+    private static void handleResult(final String json) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                NewBean newBean = new Gson().fromJson(json, NewBean.class);
+                List<NewBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean> contentlistBeans = newBean.getShowapi_res_body().getPagebean().getContentlist();
+                for (int i = 0; i < contentlistBeans.size(); i++) {
+                    String title = contentlistBeans.get(i).getTitle();
+                    String link = contentlistBeans.get(i).getLink();
+                    LogUtil.e("==========" + title + link);
+                }
+            }
+        });
+    }
