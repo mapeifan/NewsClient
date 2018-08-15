@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.tesr.yiyuan.tool.LogUtil;
 import com.tesr.yiyuan.R;
 import java.util.List;
@@ -52,9 +54,13 @@ public class NewsListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         NewContentBean newsBean = newsBeens.get(position);
-    //    holder.image.setImageUrl(newsBean.getImgurl());
-        LogUtil.e("===adapter:"+position+newsBean.getTitle());
-      //  Glide.with(this).load(url).into(holder.time);
+        //LogUtil.e("===adapter:"+position+newsBean.getTitle());
+        if (newsBean.getUrl().equalsIgnoreCase("null_image_url")){
+            Glide.with(context).load(R.drawable.new_icon).into(holder.image);
+        }else {
+            Glide.with(context).load(newsBean.getImagUrl()).into(holder.image);
+        }
+
         holder.title.setText(newsBean.getTitle());
         holder.source.setText(newsBean.getSource());
         holder.time.setText(newsBean.getTime());
@@ -62,8 +68,8 @@ public class NewsListAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-//        @BindView(R.id.image)
-//        ImageView image;
+        @BindView(R.id.iv_icon)
+        ImageView image;
         @BindView(R.id.tv_news_title)
         TextView title;
         @BindView(R.id.tv_news_source)

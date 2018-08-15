@@ -5,6 +5,15 @@ public class NewContentBean {
     private String url;
     private String source;
     private String time;
+    private String imagUrl;
+
+    public String getImagUrl() {
+        return imagUrl;
+    }
+
+    public void setImagUrl(String imagUrl) {
+        this.imagUrl = imagUrl;
+    }
 
     public String getTitle() {
         return title;
@@ -45,6 +54,7 @@ public class NewContentBean {
                 ", url='" + url + '\'' +
                 ", source='" + source + '\'' +
                 ", time='" + time + '\'' +
+                ", imagUrl='" + imagUrl + '\'' +
                 '}';
     }
 }
