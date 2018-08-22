@@ -1,29 +1,30 @@
-package com.tesr.yiyuan;
+package com.tesr.yiyuan.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.tesr.yiyuan.news.NewBean;
-import com.tesr.yiyuan.news.NewContentBean;
-import com.tesr.yiyuan.news.NewsListAdapter;
-import com.tesr.yiyuan.news.NewsService;
+import com.tesr.yiyuan.R;
+import com.tesr.yiyuan.bean.NewBean;
+import com.tesr.yiyuan.bean.NewContentBean;
+import com.tesr.yiyuan.adapter.NewsListAdapter;
+import com.tesr.yiyuan.mode.NewsService;
 import com.tesr.yiyuan.tool.AndroidScheduler;
-import com.tesr.yiyuan.tool.LogUtil;
-import com.tesr.yiyuan.tool.UrlTools;
+import com.tesr.yiyuan.tool.UrlTool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +33,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -41,38 +41,43 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
-public class NewsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class NewsFragment extends Fragment implements AdapterView.OnItemClickListener {
     @BindView(R.id.listView)
     PullToRefreshListView listView;
-    @BindViews({R.id.tv_new_name, R.id.tv_new_page})
-    List<TextView> textViews;
-    private Context context;
-    // 本来打算做几个模块的，想到自己这个项目只是个demo ，后面有时间可以完善下 做个完整的新闻demo吧
-    // 目前已做随机刷新 模块内容（机智如我）
-    private String[] titles = new String[]{
-            "头条", "社会", "国内", "国际", "娱乐",
-            "体育", "军事", "科技", "财经", "时尚"};
     protected Handler mHandler = new Handler();
     private List<NewContentBean> news = new ArrayList<>();
     private NewsListAdapter adapter;
-    private String newsType = "头条";
+    private String mMovieGenres;
     private int newsPage = 1;
     private int newsPageSize;
+    private Context mContext;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_news, container, false);
+        ButterKnife.bind(this, view);
+        initUi(view);
+        return view;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        int flag = WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        getWindow().setFlags(flag, flag);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        context = this;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+    private void initUi(View view) {
+        if (getArguments() != null) {
+            mMovieGenres = getArguments().getString("type");
+        }
         initPullToRefreshListView();
         listView.setOnItemClickListener(this);
-        loadNews(titles[0], newsPage);
-        adapter = new NewsListAdapter(this, news);
+        loadNews(mMovieGenres, newsPage);
+        adapter = new NewsListAdapter(mContext, news);
         listView.setAdapter(adapter);
     }
+
 
     private void initPullToRefreshListView() {
         listView.setMode(PullToRefreshBase.Mode.BOTH);
@@ -88,15 +93,15 @@ public class NewsActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
-                newsType = titles[(int) (Math.random() * (titles.length))];
+                //  newsType = titles[(int) (Math.random() * (titles.length))];  //随机去掉
                 newsPage = 1;
-                loadNews(newsType, newsPage);
+                loadNews(mMovieGenres, newsPage);
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                 if (newsPage == newsPageSize) {
-                    Toast.makeText(NewsActivity.this, "我是有底线的！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "我是有底线的！", Toast.LENGTH_SHORT).show();
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -107,15 +112,15 @@ public class NewsActivity extends AppCompatActivity implements AdapterView.OnIte
                     return;
                 }
                 newsPage++;
-                loadNews(newsType, newsPage);
+                loadNews(mMovieGenres, newsPage);
             }
         });
     }
 
     private void loadNews(String newsType, int newsPage) {
         Map<String, String> params = new HashMap<>();
-        params.put("showapi_appid", UrlTools.appid);
-        params.put("showapi_sign", UrlTools.secret);
+        params.put("showapi_appid", UrlTool.appid);
+        params.put("showapi_sign", UrlTool.secret);
         params.put("channelId", "");
         params.put("channelName", "");
         params.put("title", newsType);
@@ -127,7 +132,7 @@ public class NewsActivity extends AppCompatActivity implements AdapterView.OnIte
         params.put("id", "");
         Retrofit retrofit = new Retrofit
                 .Builder()
-                .baseUrl(UrlTools.APP_URL)
+                .baseUrl(UrlTool.APP_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
@@ -196,8 +201,6 @@ public class NewsActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
                 listView.getRefreshableView().setSelection(1);  //回到第一行item
                 adapter.notifyDataSetInvalidated();
-                textViews.get(0).setText("NEWS - " + newsType);  // 暂时写在这里
-                textViews.get(1).setText("" + newsPage + " - " + newsPageSize);  // 暂时写在这里
             }
         });
     }
@@ -208,15 +211,8 @@ public class NewsActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void startWebActivity(String url) {
-        Intent intent = new Intent(context, WebActivity.class);
+        Intent intent = new Intent(mContext, WebActivity.class);
         intent.putExtra("url", url);
         startActivity(intent);
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }
-
-

@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.news;
+package com.tesr.yiyuan.bean;
 
 public class NewContentBean {
     private String title;

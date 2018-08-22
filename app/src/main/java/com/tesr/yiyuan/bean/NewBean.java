@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.news;
+package com.tesr.yiyuan.bean;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

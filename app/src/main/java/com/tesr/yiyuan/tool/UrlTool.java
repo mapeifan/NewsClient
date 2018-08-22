@@ -1,6 +1,6 @@
 package com.tesr.yiyuan.tool;
 
-public class UrlTools {
+public class UrlTool {
     public final static String APP_URL_2="109-35";
     //易源数据   API  (20180725)
     public final static String appid = "70659";

@@ -7,17 +7,27 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.tesr.yiyuan.ui.LoginActivity;
+import com.tesr.yiyuan.ui.NewsActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class WelcomeActivity extends Activity implements View.OnClickListener {
     private int recLen = 3;//跳过倒计时提示3秒
-    private TextView tv;
     Timer timer = new Timer();
     private Handler handler;
     private Runnable runnable;
+    @BindView(R.id.tv_welcome)
+    TextView tv;
+    @BindView(R.id.rl_welcome_break)
+    RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,9 +35,9 @@ public class WelcomeActivity extends Activity implements View.OnClickListener {
         int flag= WindowManager.LayoutParams.FLAG_FULLSCREEN;
         getWindow().setFlags(flag, flag);
         setContentView(R.layout.activity_welcome);
+        ButterKnife.bind(this);
         initView();
         timer.schedule(task, 1000, 1000);
-
         handler = new Handler();
         handler.postDelayed(runnable = new Runnable() {
             @Override
@@ -40,8 +50,7 @@ public class WelcomeActivity extends Activity implements View.OnClickListener {
 
     }
     private void initView() {
-        tv = findViewById(R.id.tv_welcome);//跳过
-        tv.setOnClickListener(this);
+        relativeLayout.setOnClickListener(this);
     }
 
     TimerTask task = new TimerTask() {
@@ -67,7 +76,7 @@ public class WelcomeActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_welcome:
+            case R.id.rl_welcome_break:
                 Intent intent = new Intent(WelcomeActivity.this, NewsActivity.class);
                 startActivity(intent);
                 finish();

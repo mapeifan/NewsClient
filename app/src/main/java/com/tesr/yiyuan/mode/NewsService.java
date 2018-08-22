@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.news;
+package com.tesr.yiyuan.mode;
 
 import java.util.Map;
 

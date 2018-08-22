@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.news;
+package com.tesr.yiyuan.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,14 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.tesr.yiyuan.tool.LogUtil;
+import com.tesr.yiyuan.bean.NewContentBean;
 import com.tesr.yiyuan.R;
+import com.tesr.yiyuan.tool.LogUtil;
+
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * “头条新闻”加载适配器
+ * “FLY 快讯”加载适配器
  */
 
 public class NewsListAdapter extends BaseAdapter {
@@ -54,9 +56,9 @@ public class NewsListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         NewContentBean newsBean = newsBeens.get(position);
-        //LogUtil.e("===adapter:"+position+newsBean.getTitle());
-        if (newsBean.getUrl().equalsIgnoreCase("null_image_url")){
-            Glide.with(context).load(R.drawable.new_icon).into(holder.image);
+        // LogUtil.e("===图片:"+newsBean.getTitle()+"===="+newsBean.getImagUrl());
+        if (newsBean.getImagUrl().equalsIgnoreCase("null_image_url")){
+            Glide.with(context).load(R.drawable.ic_empty_picture).into(holder.image);
         }else {
             Glide.with(context).load(newsBean.getImagUrl()).into(holder.image);
         }
