@@ -20,6 +20,7 @@ Retrofit+Rxjava+Gson 写的新闻端小项目Demo
 6、标题栏修改 （不再显示 页面）
 
 
+![效果图](https://github.com/mapeifan/NewsClient/blob/master/app/src/main/res/效果图2.png)
 
 
 #20180815 修改
