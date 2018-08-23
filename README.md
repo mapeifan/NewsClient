@@ -11,7 +11,9 @@ Retrofit+Rxjava+Gson 写的新闻端小项目Demo
 
 1、新增极光推送（目前仅做了提示）
 
-2、系统原生webview添加
+2、系统原生webview添加 （TBS 和原生切换使用）
+
+3、第三方库 EventBus 的使用
 
 目前主要存在（webview 加载空白的问题，目前还在查找原因）
 
