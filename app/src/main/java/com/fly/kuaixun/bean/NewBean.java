@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.bean;
+package com.fly.kuaixun.bean;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

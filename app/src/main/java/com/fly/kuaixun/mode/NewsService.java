@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.mode;
+package com.fly.kuaixun.mode;
 
 import java.util.Map;
 

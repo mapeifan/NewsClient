@@ -9,7 +9,7 @@
         android:layout_height="match_parent"></FrameLayout>
 
 
-    <com.tesr.yiyuan.tool.X5WebView
+    <com.fly.kuaixun.tool.X5WebView
         android:id="@+id/web_filechooser"
         android:layout_width="fill_parent"
         android:layout_height="match_parent" />

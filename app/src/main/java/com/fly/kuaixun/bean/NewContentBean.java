@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.bean;
+package com.fly.kuaixun.bean;
 
 public class NewContentBean {
     private String title;

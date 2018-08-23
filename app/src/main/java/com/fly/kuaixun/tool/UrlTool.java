@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.tool;
+package com.fly.kuaixun.tool;
 
 public class UrlTool {
     public final static String APP_URL_2="109-35";

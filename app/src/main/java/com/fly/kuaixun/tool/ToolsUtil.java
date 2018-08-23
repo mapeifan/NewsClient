@@ -1,11 +1,11 @@
-package com.tesr.yiyuan.tool;
+package com.fly.kuaixun.tool;
 
 import android.app.Activity;
 import android.support.design.widget.TabLayout;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.tesr.yiyuan.base.BaseApplication;
+import com.fly.kuaixun.base.BaseApplication;
 
 import java.util.Collection;
 

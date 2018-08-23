@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.ui;
+package com.fly.kuaixun.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,13 +18,13 @@ import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.tesr.yiyuan.R;
-import com.tesr.yiyuan.bean.NewBean;
-import com.tesr.yiyuan.bean.NewContentBean;
-import com.tesr.yiyuan.adapter.NewsListAdapter;
-import com.tesr.yiyuan.mode.NewsService;
-import com.tesr.yiyuan.tool.AndroidScheduler;
-import com.tesr.yiyuan.tool.UrlTool;
+import com.fly.kuaixun.R;
+import com.fly.kuaixun.bean.NewBean;
+import com.fly.kuaixun.bean.NewContentBean;
+import com.fly.kuaixun.adapter.NewsListAdapter;
+import com.fly.kuaixun.mode.NewsService;
+import com.fly.kuaixun.tool.AndroidScheduler;
+import com.fly.kuaixun.tool.UrlTool;
 
 import java.io.IOException;
 import java.util.ArrayList;

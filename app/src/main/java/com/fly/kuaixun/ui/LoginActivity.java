@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.ui;
+package com.fly.kuaixun.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.tesr.yiyuan.R;
-import com.tesr.yiyuan.tool.LogUtil;
+import com.fly.kuaixun.R;
+import com.fly.kuaixun.tool.LogUtil;
 
 import java.util.List;
 

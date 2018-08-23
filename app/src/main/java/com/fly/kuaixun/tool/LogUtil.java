@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.tool;
+package com.fly.kuaixun.tool;
 
 /**
  * Log 工具类

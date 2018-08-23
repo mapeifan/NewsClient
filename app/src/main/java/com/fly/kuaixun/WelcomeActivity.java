@@ -1,4 +1,4 @@
-package com.tesr.yiyuan;
+package com.fly.kuaixun;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tesr.yiyuan.ui.LoginActivity;
-import com.tesr.yiyuan.ui.NewsActivity;
+import com.fly.kuaixun.ui.LoginActivity;
+import com.fly.kuaixun.ui.NewsActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;

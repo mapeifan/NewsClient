@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.ui;
+package com.fly.kuaixun.ui;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
-import com.tesr.yiyuan.R;
-import com.tesr.yiyuan.adapter.NewsViewPagerAdapter;
-import com.tesr.yiyuan.tool.ToolsUtil;
+import com.fly.kuaixun.R;
+import com.fly.kuaixun.adapter.NewsViewPagerAdapter;
+import com.fly.kuaixun.tool.ToolsUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

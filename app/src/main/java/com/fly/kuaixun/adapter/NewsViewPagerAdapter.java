@@ -1,8 +1,8 @@
-package com.tesr.yiyuan.adapter;
+package com.fly.kuaixun.adapter;
 
 import android.support.v4.app.FragmentManager;
-import com.tesr.yiyuan.ui.NewsFragment;
-import com.tesr.yiyuan.base.BaseFragmentAdapter;
+import com.fly.kuaixun.ui.NewsFragment;
+import com.fly.kuaixun.base.BaseFragmentAdapter;
 
 import java.util.List;
 

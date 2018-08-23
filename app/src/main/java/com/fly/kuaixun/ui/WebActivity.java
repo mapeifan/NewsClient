@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.ui;
+package com.fly.kuaixun.ui;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.view.View;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
@@ -14,11 +16,12 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
-import com.tesr.yiyuan.R;
-import com.tesr.yiyuan.tool.LogUtil;
+import com.fly.kuaixun.R;
+import com.fly.kuaixun.tool.LogUtil;
 
 public class WebActivity extends Activity {
 
+    private SpinKitView spinKitView;
     private WebView webView;
     private String url;
     private Handler mHandler = new Handler() {
@@ -27,7 +30,11 @@ public class WebActivity extends Activity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
+                    spinKitView.setVisibility(View.VISIBLE);
                     webView.loadUrl(url);
+                    break;
+                case 2:
+                    spinKitView.setVisibility(View.GONE);
                     break;
             }
         }
@@ -45,6 +52,7 @@ public class WebActivity extends Activity {
     }
 
     private void initWebView() {
+        spinKitView =(SpinKitView)findViewById(R.id.spin_kit) ;
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSavePassword(false);
@@ -98,6 +106,9 @@ public class WebActivity extends Activity {
             @Override
             public void onProgressChanged(WebView webView, int progress) {
                 super.onProgressChanged(webView, progress);
+                if (progress==100){
+                    mHandler.sendEmptyMessage(2);
+                }
                 //   LogUtil.e("============加载进度："+progress);
 
             }

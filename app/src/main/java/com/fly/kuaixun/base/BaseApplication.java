@@ -1,11 +1,11 @@
-package com.tesr.yiyuan.base;
+package com.fly.kuaixun.base;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 
 import com.tencent.smtt.sdk.QbSdk;
-import com.tesr.yiyuan.tool.LogUtil;
+import com.fly.kuaixun.tool.LogUtil;
 
 public class BaseApplication extends Application {
 

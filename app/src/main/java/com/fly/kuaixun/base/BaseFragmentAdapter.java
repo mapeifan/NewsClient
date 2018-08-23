@@ -1,12 +1,12 @@
-package com.tesr.yiyuan.base;
+package com.fly.kuaixun.base;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 
-import com.tesr.yiyuan.tool.ToolsUtil;
-import com.tesr.yiyuan.ui.NewsFragment;
+import com.fly.kuaixun.tool.ToolsUtil;
+import com.fly.kuaixun.ui.NewsFragment;
 
 import java.util.ArrayList;
 import java.util.List;

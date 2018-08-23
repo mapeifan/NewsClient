@@ -1,4 +1,4 @@
-package com.tesr.yiyuan.adapter;
+package com.fly.kuaixun.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,9 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.tesr.yiyuan.bean.NewContentBean;
-import com.tesr.yiyuan.R;
-import com.tesr.yiyuan.tool.LogUtil;
+import com.fly.kuaixun.bean.NewContentBean;
+import com.fly.kuaixun.R;
+import com.fly.kuaixun.tool.LogUtil;
 
 import java.util.List;
 import butterknife.BindView;
