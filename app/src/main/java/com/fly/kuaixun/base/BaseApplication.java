@@ -7,6 +7,8 @@ import android.content.res.Resources;
 import com.tencent.smtt.sdk.QbSdk;
 import com.fly.kuaixun.tool.LogUtil;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class BaseApplication extends Application {
 
     private static BaseApplication baseApplication;
@@ -29,8 +31,11 @@ public class BaseApplication extends Application {
             public void onCoreInitFinished() {
             }
         };
-
         QbSdk.initX5Environment(getApplicationContext(), callback);
+
+        /* 极光推送 初始化*/
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
     public static Context getAppContext() {

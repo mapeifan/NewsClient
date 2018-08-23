@@ -2,25 +2,23 @@ package com.fly.kuaixun.ui;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.os.Build;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.webkit.JsResult;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
-import com.github.ybq.android.spinkit.SpinKitView;
-import com.tencent.smtt.export.external.interfaces.JsResult;
-import com.tencent.smtt.export.external.interfaces.SslError;
-import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 import com.fly.kuaixun.R;
-import com.fly.kuaixun.tool.LogUtil;
+import com.github.ybq.android.spinkit.SpinKitView;
 
-public class WebActivity extends Activity {
+public class WebBrowerActivity extends Activity {
 
     private SpinKitView spinKitView;
     private WebView webView;
@@ -44,41 +42,31 @@ public class WebActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_content);
-        webView = (WebView) findViewById(R.id.webview);
+        setContentView(R.layout.activity_web_content);
+        webView = (WebView) findViewById(R.id.webview_2);
         url = getIntent().getStringExtra("url");
         initWebView();
-        //mHandler.sendEmptyMessage(1);
+        mHandler.sendEmptyMessage(1);
 
     }
 
     private void initWebView() {
-        spinKitView =(SpinKitView)findViewById(R.id.spin_kit) ;
+        spinKitView =(SpinKitView)findViewById(R.id.spin_kit_2) ;
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        // 设置可以支持缩放
-        webSettings.setSupportZoom(true);
-        // 扩大比例的缩放
-        webSettings.setUseWideViewPort(true);
-        // 自适应屏幕
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setUseWideViewPort(true);
-        webSettings.setDomStorageEnabled(true);//这句话必须保留。。否则无法播放优酷视频网页。。其他的可以
-
-      //  webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        //后添加 20180823
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            webSettings.setMixedContentMode(android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        }
-        webSettings.setAppCacheMaxSize(1024*1024*8);
-        String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath();
-        webSettings.setAppCachePath(appCachePath);
-        webSettings.setAllowFileAccess(true);
-        webSettings.setAppCacheEnabled(true);
-
-        webView.setWebContentsDebuggingEnabled(true);   // 调试需要。。。。appium 测试
-        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+//        webSettings.setSavePassword(false);
+//        // 设置可以支持缩放
+//        webSettings.setSupportZoom(true);
+//        // 扩大比例的缩放
+//        webSettings.setUseWideViewPort(true);
+//        // 自适应屏幕
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        webSettings.setLoadWithOverviewMode(true);
+//        webSettings.setUseWideViewPort(true);
+//        webSettings.setDomStorageEnabled(true);//这句话必须保留。。否则无法播放优酷视频网页。。其他的可以
+        webView.setWebChromeClient(new WebChromeClient());//这行最好不要丢掉
+       // webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        WebView.setWebContentsDebuggingEnabled(true);   // 调试需要。。。。appium 测试
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView webView, String s, Bitmap bitmap) {
@@ -87,7 +75,6 @@ public class WebActivity extends Activity {
 
             @Override
             public void onPageFinished(WebView webView, String s) {
-                LogUtil.e("====onPageFinished:"+s);
                 super.onPageFinished(webView, s);
             }
 
@@ -99,8 +86,8 @@ public class WebActivity extends Activity {
 
             @Override
             public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {
+//                super.onReceivedSslError(webView, sslErrorHandler, sslError);
                 sslErrorHandler.proceed();//忽略SSL证书错误
-            //    super.onReceivedSslError(webView, sslErrorHandler, sslError);
             }
         });
 
@@ -125,7 +112,7 @@ public class WebActivity extends Activity {
 
             }
         });
-        webView.loadUrl(url);
+
     }
 }
 

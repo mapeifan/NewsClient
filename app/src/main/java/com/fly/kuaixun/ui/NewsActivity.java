@@ -1,14 +1,23 @@
 package com.fly.kuaixun.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import com.fly.kuaixun.R;
 import com.fly.kuaixun.adapter.NewsViewPagerAdapter;
+import com.fly.kuaixun.tool.LogUtil;
 import com.fly.kuaixun.tool.ToolsUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +42,7 @@ public class NewsActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         loadMovieChannel();
+        EventBus.getDefault().register(this);
     }
     /**
      * 加载电影频道
@@ -63,9 +73,32 @@ public class NewsActivity extends AppCompatActivity{
         return fragment;
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent1(String text) {
+       switch (text){
+           case "Jpush_message_come":
+               LogUtil.e("================= 收到极光推送消息");
+               showNormalDialog();
+               break;
+       }
+    }
+
+    /**
+     *  一个dialog，用来提醒极光推送效果
+     */
+    private void showNormalDialog() {
+        final AlertDialog.Builder
+                normalDialog =
+                new AlertDialog.Builder(NewsActivity.this);
+        normalDialog.setTitle("您有新的消息！");
+        normalDialog.setMessage("您有新的消息，请及时查阅！");
+        normalDialog.show();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }
 
