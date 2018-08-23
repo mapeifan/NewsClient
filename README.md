@@ -15,7 +15,9 @@ Retrofit+Rxjava+Gson 写的新闻端小项目Demo
 
 目前主要存在（webview 加载空白的问题，目前还在查找原因）
 
+![效果图](https://github.com/mapeifan/NewsClient/blob/master/app/src/main/res/Jpush_1.png)
 
+![效果图](https://github.com/mapeifan/NewsClient/blob/master/app/src/main/res/Jpush_2.png)
 
 
 ==========================================================================================================================================
