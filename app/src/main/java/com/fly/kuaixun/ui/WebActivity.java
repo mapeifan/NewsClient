@@ -53,7 +53,7 @@ public class WebActivity extends Activity {
     }
 
     private void initWebView() {
-        spinKitView =(SpinKitView)findViewById(R.id.spin_kit) ;
+        spinKitView = (SpinKitView) findViewById(R.id.spin_kit);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         // 设置可以支持缩放
@@ -66,12 +66,12 @@ public class WebActivity extends Activity {
         webSettings.setUseWideViewPort(true);
         webSettings.setDomStorageEnabled(true);//这句话必须保留。。否则无法播放优酷视频网页。。其他的可以
 
-      //  webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        //  webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         //后添加 20180823
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-        webSettings.setAppCacheMaxSize(1024*1024*8);
+        webSettings.setAppCacheMaxSize(1024 * 1024 * 8);
         String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath();
         webSettings.setAppCachePath(appCachePath);
         webSettings.setAllowFileAccess(true);
@@ -87,7 +87,7 @@ public class WebActivity extends Activity {
 
             @Override
             public void onPageFinished(WebView webView, String s) {
-                LogUtil.e("====onPageFinished:"+s);
+                LogUtil.e("====onPageFinished:" + s);
                 super.onPageFinished(webView, s);
             }
 
@@ -100,7 +100,7 @@ public class WebActivity extends Activity {
             @Override
             public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {
                 sslErrorHandler.proceed();//忽略SSL证书错误
-            //    super.onReceivedSslError(webView, sslErrorHandler, sslError);
+                //    super.onReceivedSslError(webView, sslErrorHandler, sslError);
             }
         });
 
@@ -118,14 +118,18 @@ public class WebActivity extends Activity {
             @Override
             public void onProgressChanged(WebView webView, int progress) {
                 super.onProgressChanged(webView, progress);
-                if (progress==100){
+                if (progress == 100) {
                     mHandler.sendEmptyMessage(2);
                 }
                 //   LogUtil.e("============加载进度："+progress);
-
             }
         });
-        webView.loadUrl(url);
+        if (url != null && !url.equalsIgnoreCase("")) {
+            webView.loadUrl(url);
+        } else {
+            webView.loadUrl("https://github.com/mapeifan/NewsClient");
+        }
+
     }
 }
 

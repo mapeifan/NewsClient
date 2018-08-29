@@ -45,7 +45,7 @@ public class NewsActivity extends AppCompatActivity{
         EventBus.getDefault().register(this);
     }
     /**
-     * 加载电影频道
+     * 加载
      */
     private void loadMovieChannel() {
         List<NewsFragment> mNewsFragmentList = new ArrayList<>();
@@ -88,12 +88,11 @@ public class NewsActivity extends AppCompatActivity{
      *  一个dialog，用来提醒极光推送效果
      */
     private void showNormalDialog() {
-        final AlertDialog.Builder
-                normalDialog =
-                new AlertDialog.Builder(NewsActivity.this);
-        normalDialog.setTitle("您有新的消息！");
-        normalDialog.setMessage("您有新的消息，请及时查阅！");
-        normalDialog.show();
+        new AlertDialog.Builder(NewsActivity.this)
+                .setTitle("通知")
+                .setMessage("您有新的消息")
+                .setPositiveButton("确定",null)
+                .show();
     }
     @Override
     protected void onDestroy() {

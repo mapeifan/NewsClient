@@ -14,6 +14,7 @@ import android.text.TextUtils;
 
 import com.fly.kuaixun.R;
 import com.fly.kuaixun.tool.LogUtil;
+import com.fly.kuaixun.tool.ToolsUtil;
 import com.fly.kuaixun.ui.NewsActivity;
 import com.fly.kuaixun.ui.WebActivity;
 import com.fly.kuaixun.ui.WebBrowerActivity;
@@ -35,16 +36,16 @@ import static android.content.Context.NOTIFICATION_SERVICE;
  * 1) 默认用户会打开主界面
  * 2) 接收不到自定义消息
  * <p>
- *  《通知》来临后，点击通知栏进入 我的github，并弹出 dialog 于主界面
- *  《自定义消息》来临后，点击进入网址
- *  军队党建工作怎么抓 此次会议习近平这样说,,http://military.people.com.cn/n1/2018/0823/c1011-30247282.html?from=singlemessage
+ * 《通知》来临后，点击通知栏进入 我的github，并弹出 dialog 于主界面
+ * 《自定义消息》来临后，点击进入网址
+ * 军队党建工作怎么抓 此次会议习近平这样说,,http://military.people.com.cn/n1/2018/0823/c1011-30247282.html?from=singlemessage
  */
 public class JpushCustomReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         try {
             Bundle bundle = intent.getExtras();
-            LogUtil.e("nReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
+           // LogUtil.e("nReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
             if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
                 String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
                 LogUtil.e("接收Registration Id : " + regId);
@@ -83,37 +84,37 @@ public class JpushCustomReceiver extends BroadcastReceiver {
     }
 
     // 打印所有的 intent extra 数据
-    private static String printBundle(Bundle bundle) {
-        StringBuilder sb = new StringBuilder();
-        for (String key : bundle.keySet()) {
-            if (key.equals(JPushInterface.EXTRA_NOTIFICATION_ID)) {
-                sb.append("\nkey:" + key + ", value:" + bundle.getInt(key));
-            } else if (key.equals(JPushInterface.EXTRA_CONNECTION_CHANGE)) {
-                sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key));
-            } else if (key.equals(JPushInterface.EXTRA_EXTRA)) {
-                if (TextUtils.isEmpty(bundle.getString(JPushInterface.EXTRA_EXTRA))) {
-                    LogUtil.e("This message has no Extra data");
-                    continue;
-                }
-                try {
-                    JSONObject json = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
-                    Iterator<String> it = json.keys();
-
-                    while (it.hasNext()) {
-                        String myKey = it.next();
-                        sb.append("\nkey:" + key + ", value: [" +
-                                myKey + " - " + json.optString(myKey) + "]");
-                    }
-                } catch (JSONException e) {
-                    LogUtil.e("Get message extra JSON error!");
-                }
-
-            } else {
-                sb.append("\nkey:" + key + ", value:" + bundle.get(key));
-            }
-        }
-        return sb.toString();
-    }
+//    private static String printBundle(Bundle bundle) {
+//        StringBuilder sb = new StringBuilder();
+//        for (String key : bundle.keySet()) {
+//            if (key.equals(JPushInterface.EXTRA_NOTIFICATION_ID)) {
+//                sb.append("\nkey:" + key + ", value:" + bundle.getInt(key));
+//            } else if (key.equals(JPushInterface.EXTRA_CONNECTION_CHANGE)) {
+//                sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key));
+//            } else if (key.equals(JPushInterface.EXTRA_EXTRA)) {
+//                if (TextUtils.isEmpty(bundle.getString(JPushInterface.EXTRA_EXTRA))) {
+//                    LogUtil.e("This message has no Extra data");
+//                    continue;
+//                }
+//                try {
+//                    JSONObject json = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
+//                    Iterator<String> it = json.keys();
+//
+//                    while (it.hasNext()) {
+//                        String myKey = it.next();
+//                        sb.append("\nkey:" + key + ", value: [" +
+//                                myKey + " - " + json.optString(myKey) + "]");
+//                    }
+//                } catch (JSONException e) {
+//                    LogUtil.e("Get message extra JSON error!");
+//                }
+//
+//            } else {
+//                sb.append("\nkey:" + key + ", value:" + bundle.get(key));
+//            }
+//        }
+//        return sb.toString();
+//    }
 
     private void processCustomMessage(Context context, Bundle bundle) {
 
@@ -121,10 +122,9 @@ public class JpushCustomReceiver extends BroadcastReceiver {
         String channelName = "channel_name";
         // 获得系统推送的自定义消息
         String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-        // 注意：我这里为了简单演示，并没有做任何的捕获异常或者条件判断处理
-        String url = message.substring(message.lastIndexOf("http"));
-        String contextText = message.substring(0, message.length() - url.length() - 2);
-        LogUtil.e("=======" + contextText);
+        String dataMessage= ToolsUtil.JpushDataPacket(message); // 对数据进行处理
+        String url= dataMessage.substring(dataMessage.lastIndexOf("http"));
+        String contextText = dataMessage.substring(0, dataMessage.length() - url.length() - 2);
         // 跳转的Activity
         Intent intent = new Intent(context, WebActivity.class);
         intent.putExtra("url", url);
@@ -143,7 +143,7 @@ public class JpushCustomReceiver extends BroadcastReceiver {
 
         notification.setAutoCancel(true)
                 .setContentText(contextText)
-                .setContentTitle("新闻早知道")
+                .setContentTitle(context.getString(R.string.app_name))
                 .setSmallIcon(R.mipmap.ic_lau)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContentIntent(pendingIntent);

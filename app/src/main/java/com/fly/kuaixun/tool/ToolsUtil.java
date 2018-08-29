@@ -26,7 +26,6 @@ public class ToolsUtil {
     }
 
     /**
-     *
      * @param tabLayout
      */
     public static void dynamicSetTabLayoutMode(TabLayout tabLayout) {
@@ -39,6 +38,7 @@ public class ToolsUtil {
             tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         }
     }
+
     private static int calculateTabWidth(TabLayout tabLayout) {
         int tabWidth = 0;
         for (int i = 0; i < tabLayout.getChildCount(); i++) {
@@ -48,10 +48,54 @@ public class ToolsUtil {
         }
         return tabWidth;
     }
+
     public static int getScreenWith() {
         return BaseApplication.getAppContext().getResources().getDisplayMetrics().widthPixels;
     }
+
     public static View getRootView(Activity context) {
         return ((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0);
     }
+
+
+    /**
+     * 转换数值并判断返回
+     * eg: int result=convertToInt(object,0);
+     * 如果 object=null 或者""
+     */
+
+    public static int convertToInt(Object value, int defaultValue) {
+        if (value == null || "".equals(value.toString().trim())) {
+            return defaultValue;
+        }
+        try {
+            return Integer.valueOf(value.toString());
+        } catch (Exception e) {
+            try {
+                return Double.valueOf(value.toString()).intValue();
+            } catch (Exception e1) {
+                return defaultValue;
+            }
+        }
+
+    }
+
+
+    /**
+     * 极光推送数据解析封装
+     */
+    public static String JpushDataPacket(String data) {
+        //判空
+        if (data != null) {
+            //判长度及内容
+            if (data.length() > 10 && data.contains("http")) {
+                return data;
+            } else {
+                return "Github,,https://github.com/mapeifan/NewsClient";
+            }
+        } else {
+            return "Github,,https://github.com/mapeifan/NewsClient";
+        }
+    }
+
 }

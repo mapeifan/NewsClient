@@ -74,8 +74,10 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemClickLis
         initPullToRefreshListView();
         listView.setOnItemClickListener(this);
         loadNews(mMovieGenres, newsPage);
-        adapter = new NewsListAdapter(mContext, news);
-        listView.setAdapter(adapter);
+        if(mContext!=null){
+            adapter = new NewsListAdapter(mContext, news);
+            listView.setAdapter(adapter);
+        }
     }
 
 
@@ -207,7 +209,13 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        startWebActivity(news.get(i - 1).getUrl());
+        if (i>=1){
+            String url=news.get(i - 1).getUrl();
+            startWebActivity(url);
+        }else {
+            String url="https://github.com/mapeifan/NewsClient";
+            startWebActivity(url);
+        }
     }
 
     private void startWebActivity(String url) {
