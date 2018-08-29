@@ -3,6 +3,8 @@ Retrofit+Rxjava+Gson 写的新闻端小项目Demo
 
 内容持续更新中~~ 基本功能不断完善中
 
+有问题请联系我：790462002@qq.com
+
 #简单的实现了 Retrofit+Rxjava+Gson 效果 ，下拉可刷新列表 采用 pull-to-refresh 框架
 
 #20180824
