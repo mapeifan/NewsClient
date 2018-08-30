@@ -1,11 +1,16 @@
 # NewsClient
 Retrofit+Rxjava+Gson 写的新闻端小项目Demo
 
-内容持续更新中~~ 基本功能不断完善中
-
-有问题请联系我：790462002@qq.com
 
 #简单的实现了 Retrofit+Rxjava+Gson 效果 ，下拉可刷新列表 采用 pull-to-refresh 框架
+
+#20180830
+
+推荐一位道友写的 仿今日头条写的demo，这个demo 功能还是比较多的，数据是根据抓包获取到的（机智）。。
+
+不错，推荐一下https://blog.csdn.net/Chay_Chan/article/details/75319452
+
+注：本Demo不再更新
 
 #20180824
 
