@@ -65,8 +65,6 @@ Retrofit+Rxjava+Gson 写的新闻端小项目Demo
 
 #20180830
 
-推荐仿今日头条写的demo
 
-https://blog.csdn.net/Chay_Chan/article/details/75319452
 
 
