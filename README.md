@@ -1,6 +1,7 @@
 # NewsClient
-Retrofit+Rxjava+Gson 写的新闻端小项目Demo
+Retrofit+Rxjava+Gson 写的新闻类Demo
 
+(适合初学Retrofit+Rxjava+Gson 的朋友)
 注：本Demo不再更新
 
 #简单的实现了 Retrofit+Rxjava+Gson 效果 ，下拉可刷新列表 采用 pull-to-refresh 框架
